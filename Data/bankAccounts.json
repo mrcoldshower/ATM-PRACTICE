@@ -3,7 +3,7 @@
     "Id": 1,
     "Name": "Pablo",
     "Email": "lol",
-    "Password": 123,
+    "Password": "123",
     "Balance": 1000
   }
 ]

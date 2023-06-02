@@ -16,7 +16,7 @@ public class LoginPage : Page
             // User typed in wrong email and/or password. Try again
             Console.WriteLine("Debug: Wrong input");
             Console.ReadKey(true);
-            Navigate("Log into your account:", new string[] { "Email", "Password", "[Login]" });
+            Display();
         }
     }
 

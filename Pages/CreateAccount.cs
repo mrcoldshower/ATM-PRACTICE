@@ -4,11 +4,21 @@ public class CreateAccountPage : Page
     public override void Display()
     {
         Navigate("Create An Account:", new string[] { "Name", "Email", "Password", "[Create]" });
-        BankAccount bankAccount = CreateAccount(QuestionsAnswers["Name"], QuestionsAnswers["Email"], QuestionsAnswers["Password"]);
+        if (QuestionsAnswers.ContainsKey("Name") && QuestionsAnswers.ContainsKey("Email") && QuestionsAnswers.ContainsKey("Password"))
+        {
+            BankAccount bankAccount = CreateAccount(QuestionsAnswers["Name"], QuestionsAnswers["Email"], QuestionsAnswers["Password"]);
 
-        Router.CurrentAccount = bankAccount;
-        Router.ChangePage(new AccountPage());
-        Router.ViewCurrentPage();
+            Router.CurrentAccount = bankAccount;
+            Router.ChangePage(new AccountPage());
+            Router.ViewCurrentPage();
+        }
+        else
+        {
+            // User didn't type everything in. Try again
+            Console.WriteLine("Debug: Not all queries were filled in");
+            Console.ReadKey(true);
+            Display();
+        }
     }
 
     public override Page ChoosePage(int input)

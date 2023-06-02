@@ -13,4 +13,15 @@ public static class Utils
         Console.ReadKey(true);
         Router.GoBack();
     }
+
+    public static void LoadingStatus(int time = 3)
+    {
+        Console.Write("Loading ");
+        for (int i = 0; i < 3; i++)
+        {
+            System.Threading.Thread.Sleep(time * 100);
+            Console.Write(".");
+        }
+        Console.WriteLine();
+    }
 }
