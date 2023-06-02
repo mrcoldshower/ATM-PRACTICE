@@ -6,7 +6,7 @@ public class HomePage : Page
         int choice = Navigate("Home page!", options);
 
         Page page = ChoosePage(choice);
-        Router.ChangePage(page);
+        Router.PushPage(page);
         Router.ViewCurrentPage();
     }
 

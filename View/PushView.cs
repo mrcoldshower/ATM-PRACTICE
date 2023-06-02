@@ -1,7 +1,10 @@
 public class PushView
 {
-    public static void PrintText(string text)
+    public static void PrintStringDictionary(Dictionary<string, string> dict)
     {
-        Console.WriteLine(text);
+        foreach (var item in dict)
+        {
+            Console.WriteLine($"{item.Key}: {item.Value}");
+        }
     }
 }

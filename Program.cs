@@ -8,7 +8,7 @@
     public static void Start()
     {
         HomePage homePage = new();
-        Router.ChangePage(homePage);
+        Router.PushPage(homePage);
         Router.ViewCurrentPage();
     }
 

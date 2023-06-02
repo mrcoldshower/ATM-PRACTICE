@@ -2,16 +2,17 @@ using static System.Console;
 
 public abstract class Page
 {
-    public bool IsInputPage = false;
+    public virtual bool IsQuestionPage { get; set; } = false;
     public abstract void Display();
     public abstract Page ChoosePage(int input);
+    public Dictionary<string, string> QuestionsAnswers { get; set; } = new Dictionary<string, string>();
 
     public int SelectedIndex;
 
     public virtual int Navigate(string prompt, string[] options, string before = "<< ", string after = " >>")
     {
         ConsoleKey keyPressed;
-        while (true)
+        do
         {
             Clear();
             DisplayOptions(prompt, options, before, after);
@@ -37,28 +38,32 @@ public abstract class Page
             }
             else if (keyPressed == ConsoleKey.LeftArrow || keyPressed == ConsoleKey.A)
             {
+                QuestionsAnswers.Clear();
                 Router.GoBack();
+                break;
             }
             else if (keyPressed == ConsoleKey.Escape)
             {
                 Utils.ExitApplication();
             }
-            else if (keyPressed != ConsoleKey.Enter && keyPressed != ConsoleKey.RightArrow && keyPressed != ConsoleKey.D)
+            else if (keyPressed == ConsoleKey.Enter || keyPressed == ConsoleKey.RightArrow || keyPressed == ConsoleKey.D)
             {
-                if (IsInputPage == true && options[SelectedIndex][0] != '[') // if page is to input data, and the option is not a create/finish button do this
+                if (IsQuestionPage == true && options[SelectedIndex][0] != '[') // if page is to input data, and the option is not a create/finish button do this
                 {
-
+                    string currentOption = options[SelectedIndex];
+                    Console.SetCursorPosition(currentOption.Length + 10, SelectedIndex + 1);
+                    if (QuestionsAnswers.ContainsKey(currentOption)) QuestionsAnswers[currentOption] = ReadLine() ?? "";
+                    else QuestionsAnswers.Add(currentOption, ReadLine() ?? "");
                 }
                 else
                 {
                     break;
                 }
             }
-        }
+        } while (true); // keyPressed != ConsoleKey.Enter && keyPressed != ConsoleKey.RightArrow && keyPressed != ConsoleKey.D
 
         return SelectedIndex;
     }
-
 
     public virtual void DisplayOptions(string prompt, string[] options, string before, string after) // before and after are what kind of decorations you want on the options menu
     {
@@ -82,7 +87,13 @@ public abstract class Page
                 BackgroundColor = ConsoleColor.Black;
             }
 
-            WriteLine($"{prefix} {before}{currentOption}{after}");
+            Write($"{prefix} {before}{currentOption}{after}");
+            if (IsQuestionPage && QuestionsAnswers.ContainsKey(currentOption))
+            {
+                ResetColor();
+                Write($"  {QuestionsAnswers[currentOption]}");
+            }
+            WriteLine();
         }
         ResetColor();
     }

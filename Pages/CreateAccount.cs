@@ -1,11 +1,14 @@
 public class CreateAccountPage : Page
 {
-    public new bool IsInputPage = true;
+    public override bool IsQuestionPage { get; set; } = true;
     public override void Display()
     {
-        Console.Clear();
-        GetInput("Create An Account:", new string[] { "Email", "Password", "[Create]" });
-        // Utils.Incomplete();
+        Navigate("Create An Account:", new string[] { "Name", "Email", "Password", "[Create]" });
+        BankAccount bankAccount = CreateAccount(QuestionsAnswers["Name"], QuestionsAnswers["Email"], QuestionsAnswers["Password"]);
+
+        Router.CurrentAccount = bankAccount;
+        Router.ChangePage(new AccountPage());
+        Router.ViewCurrentPage();
     }
 
     public override Page ChoosePage(int input)
@@ -13,7 +16,7 @@ public class CreateAccountPage : Page
         return null!;
     }
 
-    public void CreateAccount(string name)
+    public BankAccount CreateAccount(string name, string email, string password)
     {
         List<BankAccount> bankAccounts = Data.BankAccounts;
 
@@ -21,7 +24,7 @@ public class CreateAccountPage : Page
         if (bankAccounts.Count == 0 || bankAccounts == null) nextId = 1;
         else nextId = bankAccounts[bankAccounts.Count - 1].Id + 1;
 
-        BankAccount bankAccount = new BankAccount(nextId, name);
+        BankAccount bankAccount = new BankAccount(nextId, name, email, password);
 
         if (bankAccounts == null)
         {
@@ -32,5 +35,6 @@ public class CreateAccountPage : Page
             bankAccounts.Add(bankAccount);
             JsonAccess<BankAccount>.BankAccountAccess.WriteAll(bankAccounts);
         }
+        return bankAccount;
     }
 }
