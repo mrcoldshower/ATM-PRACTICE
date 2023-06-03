@@ -2,8 +2,6 @@ using Newtonsoft.Json;
 
 public class JsonAccess<T>
 {
-    public static JsonAccess<BankAccount> BankAccountAccess = new JsonAccess<BankAccount>(@"\Data\bankAccounts.json");
-
     public string Path;
 
     public JsonAccess(string path)

@@ -24,4 +24,10 @@ public static class Utils
         }
         Console.WriteLine();
     }
+
+    public static void Debug(string message)
+    {
+        Console.WriteLine($"Debug: {message}");
+        Console.ReadKey(true);
+    }
 }

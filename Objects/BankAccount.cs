@@ -1,6 +1,6 @@
-public class BankAccount
+public class BankAccount : Account
 {
-    public int Id { get; set; }
+    public override int Id { get; set; }
     public string Name { get; set; }
     public string Email { get; set; }
 

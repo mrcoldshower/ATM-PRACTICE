@@ -41,4 +41,12 @@ public class Router
             ViewCurrentPage();
         }
     }
+
+    public static void Pop()
+    {
+        if (Stack.Count > 1)
+        {
+            Stack.Pop();
+        }
+    }
 }

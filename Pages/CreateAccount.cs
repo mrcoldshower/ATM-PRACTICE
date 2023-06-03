@@ -38,12 +38,12 @@ public class CreateAccountPage : Page
 
         if (bankAccounts == null)
         {
-            JsonAccess<BankAccount>.BankAccountAccess.WriteAll(new List<BankAccount>() { bankAccount });
+            Data.BankAccountAccess.WriteAll(new List<BankAccount>() { bankAccount });
         }
         else
         {
             bankAccounts.Add(bankAccount);
-            JsonAccess<BankAccount>.BankAccountAccess.WriteAll(bankAccounts);
+            Data.BankAccountAccess.WriteAll(bankAccounts);
         }
         return bankAccount;
     }
